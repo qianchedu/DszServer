@@ -1,5 +1,7 @@
 package com.dsz.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,12 +16,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.dsz.threads.MyThreads;
 import com.dsz.wifi.HPWifiSetup;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+
+    private Button btnOpen;
+    private Button btnClose;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +37,38 @@ public class MainActivity extends AppCompatActivity
 
 
         setContentView(R.layout.activity_main);
+        context = MainActivity.this;
+        initSys();
+        initViews();
+
+        initEvents();
+
+        MyThreads myThreads = new MyThreads(context);
+        myThreads.start();
+
+    }
+
+    /**
+     * 按钮点击事件
+     */
+    private void initEvents() {
+        btnOpen.setOnClickListener(this);
+        btnClose.setOnClickListener(this);
+
+    }
+
+    /**
+     * 视图布局
+     */
+    private void initViews() {
+        btnOpen = (Button) findViewById(R.id.main_btn_open);
+        btnClose = (Button)findViewById(R.id.main_btn_close);
+    }
+
+    /**
+     * 程序本身自动生成的代码 被我抽取出来了
+     */
+    private void initSys() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -54,7 +94,7 @@ public class MainActivity extends AppCompatActivity
     private void apWifiSetting() {
         HPWifiSetup hpwifi = HPWifiSetup.getInstance(this);
         try {
-            hpwifi.setupWifiAp("<>" + Build.MODEL + "相机","12345678",true);
+            hpwifi.setupWifiAp("<01>" + Build.MODEL + "相机","12345678",true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -132,5 +172,26 @@ public class MainActivity extends AppCompatActivity
                 }
         }
         return super.onKeyUp(keyCode, event);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.main_btn_open:
+                openTest();
+                break;
+            case R.id.main_btn_close:
+                break;
+        }
+    }
+
+
+
+    /**
+     * 打开测试
+     */
+    private void openTest() {
+        Intent intent = new Intent(context,TestActivity.class);
+        startActivity(intent);
     }
 }
