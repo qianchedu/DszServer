@@ -17,7 +17,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.Window;
@@ -41,7 +43,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class ControledView extends Activity implements SurfaceHolder.Callback {
+public class ControledView extends AppCompatActivity implements SurfaceHolder.Callback {
 	public final static String CONTROLED_POSITION = "/remoteCamera/controled/";	//文件路径
     public static final int CMDPAGESIZE = 10;
 	public ServerSocket serverSocket = null;
@@ -106,8 +108,9 @@ public class ControledView extends Activity implements SurfaceHolder.Callback {
         if (mMjpegServer != null) {
             mMjpegServer.close();
         }
-        if(myServerSocketThread != null)
-           myServerSocketThread.destroy();
+        if(myServerSocketThread != null){
+//           myServerSocketThread.destroy();
+        }
     }
 
     public void surfaceCreated(SurfaceHolder holder) {
@@ -428,5 +431,13 @@ public class ControledView extends Activity implements SurfaceHolder.Callback {
 				e1.printStackTrace();
 			}
 		}
-	} 
+	}
+
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode){
+        }
+        return super.onKeyUp(keyCode, event);
+    }
 }
