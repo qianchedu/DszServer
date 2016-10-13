@@ -5,4 +5,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="can_not_open_camera">Can not open camera</string>
+    <string name="service_started">Webcam started</string>
+
 </resources>

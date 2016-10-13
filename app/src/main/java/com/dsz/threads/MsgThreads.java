@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 
+import com.dsz.activity.ControledView;
 import com.dsz.activity.MainActivity;
 import com.dsz.activity.TestActivity;
 
@@ -16,12 +18,12 @@ import java.net.Socket;
  * Created by Administrator on 2016/10/12.
  */
 
-public class MyThreads extends Thread{
+public class MsgThreads extends Thread{
     public ServerSocket serverSocket;
     public byte[] readBuffer = new byte[1024];
     public int readBufferSize = 0;
     private  Context context;
-    public MyThreads(Context context){
+    public MsgThreads(Context context){
         this.context = context;
     }
 
@@ -31,17 +33,19 @@ public class MyThreads extends Thread{
         bundle.clear();
 
         try {
+            Log.i("MsgThreads","线程1");
             serverSocket = new ServerSocket(30000);
             while (true){
                 Message msg = new Message();
-                msg.what = 0x11;
+                msg.what = 0x12;
 
                 try{
                     Socket socket = serverSocket.accept();
                     readBufferSize = socket.getInputStream().read(readBuffer);
                     if(readBufferSize == 9){
+                        Log.i("MsgThreads", readBuffer[0] + "线程1");
                         if(readBuffer[0] == 'o'){
-                            Intent intent = new Intent(context, TestActivity.class);
+                            Intent intent = new Intent(context, ControledView.class);
                             context.startActivity(intent);
                         }
 

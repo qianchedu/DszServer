@@ -3,7 +3,7 @@ package com.dsz.activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.dsz.threads.MyThreads;
+import com.dsz.threads.MsgThreads;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -12,7 +12,7 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_test);
-        MyThreads myThreads = new MyThreads(this);
-        myThreads.start();
+        MsgThreads msgThreads = new MsgThreads(this);
+        msgThreads.start();
     }
 }
